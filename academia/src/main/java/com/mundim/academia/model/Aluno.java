@@ -17,12 +17,12 @@ public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(length = 100, nullable = false)
-    private String nome;
-    @Column(length = 14, nullable = false, unique = true)
+
+    @Column(unique = true)
     private String CPF;
+
+    private String nome;
     private LocalDate dataNascimento;
-    @Column(length = 1)
     private String genero;
     private LocalDate dataMatricula;
 
