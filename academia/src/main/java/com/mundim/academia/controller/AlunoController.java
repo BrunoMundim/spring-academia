@@ -54,6 +54,6 @@ public class AlunoController {
         Aluno aluno = alunoService.get(id);
         String nome = aluno.getNome();
         alunoService.delete(id);
-        return new ResponseEntity<>("Aluno " + nome + " deletado!", HttpStatus.OK);
+        return new ResponseEntity("Aluno " + nome + " deletado!", HttpStatus.OK);
     }
 }

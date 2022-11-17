@@ -1,10 +1,12 @@
 package com.mundim.academia.controller;
 
 import com.mundim.academia.model.AvaliacaoFisica;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.mundim.academia.model.forms.AvaliacaoFisicaForm;
+import com.mundim.academia.service.implementations.AvaliacaoFisicaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,9 +14,23 @@ import java.util.List;
 @RequestMapping("/alunos/avaliacoes/")
 public class AvaliacaoFisicaController {
 
-    @GetMapping("/{id}")
-    public List<AvaliacaoFisica> getAll(@PathVariable("id") Integer id){
+    @Autowired
+    private AvaliacaoFisicaService avaliacaoFisicaService;
 
+    @GetMapping("/{idAluno}")
+    public List<AvaliacaoFisica> getAll(@PathVariable("idAluno") Integer idAluno){
+        return avaliacaoFisicaService.getAll(idAluno);
+    }
+
+    @PostMapping("/{idAluno}")
+    public AvaliacaoFisica create(@PathVariable("idAluno") Integer idAluno, @RequestBody AvaliacaoFisicaForm form){
+        return avaliacaoFisicaService.create(idAluno, form);
+    }
+
+    @DeleteMapping("/{idAvaliacao}")
+    public ResponseEntity delete(@PathVariable("idAvaliacao") Integer id) {
+        avaliacaoFisicaService.delete(id);
+        return new ResponseEntity("Avaliação apagada!", HttpStatus.OK);
     }
 
 }

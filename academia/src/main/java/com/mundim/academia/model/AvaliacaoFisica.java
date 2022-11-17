@@ -16,7 +16,6 @@ public class AvaliacaoFisica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "avalicao_fisica_id", nullable = false)
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)

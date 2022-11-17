@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AvaliacaoFisicaRepository extends JpaRepository<AvaliacaoFisica, Integer> {
 
-    public List<AvaliacaoFisica> findAllByAluno(Aluno aluno);
+    public List<AvaliacaoFisica> findByAluno(Aluno aluno);
 
 }
