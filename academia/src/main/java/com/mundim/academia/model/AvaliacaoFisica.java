@@ -22,9 +22,13 @@ public class AvaliacaoFisica {
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;
 
+    @Column(nullable = false)
     private Double peso;
+    @Column(nullable = false)
     private Double altura;
+    @Column(nullable = false)
     private Double bodyFat;
+    @Column(nullable = false)
     private Double massaMagra;
     private LocalDate dataAvaliacao = LocalDate.now();
 

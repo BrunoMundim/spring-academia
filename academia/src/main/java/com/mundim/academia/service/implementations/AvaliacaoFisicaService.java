@@ -9,6 +9,7 @@ import com.mundim.academia.service.IAvaliacaoFisicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,21 +25,25 @@ public class AvaliacaoFisicaService implements IAvaliacaoFisicaService {
     @Override
     public AvaliacaoFisica create(Integer id, AvaliacaoFisicaForm form) {
         AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica();
+        Aluno aluno = alunoRepository.findById(id).orElse(null);
 
-        Aluno aluno = alunoRepository.findById(id).get();
-        avaliacaoFisica.setAluno(aluno);
+        if(aluno != null){
+            avaliacaoFisica.setAluno(aluno);
 
-        avaliacaoFisica.setAltura(form.getAltura());
-        avaliacaoFisica.setPeso(form.getPeso());
-        avaliacaoFisica.setBodyFat(form.getBodyFat());
-        avaliacaoFisica.setMassaMagra(form.getMassaMagra());
+            avaliacaoFisica.setAltura(form.getAltura());
+            avaliacaoFisica.setPeso(form.getPeso());
+            avaliacaoFisica.setBodyFat(form.getBodyFat());
+            avaliacaoFisica.setMassaMagra(form.getMassaMagra());
 
-        return avaliacaoRepository.save(avaliacaoFisica);
+            return avaliacaoRepository.save(avaliacaoFisica);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public List<AvaliacaoFisica> getAll(Integer id) {
-        Aluno aluno = alunoRepository.findById(id).get();
+        Aluno aluno = alunoRepository.findById(id).orElse(null);
         return avaliacaoRepository.findByAluno(aluno);
     }
 
@@ -46,7 +51,7 @@ public class AvaliacaoFisicaService implements IAvaliacaoFisicaService {
     public Optional<AvaliacaoFisica> delete(Integer idAvaliacao) {
         if(avaliacaoRepository.findById(idAvaliacao).isPresent()){
             AvaliacaoFisica avaliacaoFisica = avaliacaoRepository.findById(idAvaliacao).get();
-            avaliacaoRepository.delete(avaliacaoFisica);
+            avaliacaoRepository.deleteAllByIdInBatch(Collections.singleton(idAvaliacao));
             return Optional.of(avaliacaoFisica);
         } else {
             return Optional.empty();

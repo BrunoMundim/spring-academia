@@ -23,8 +23,14 @@ public class AvaliacaoFisicaController {
     }
 
     @PostMapping("/{idAluno}")
-    public AvaliacaoFisica create(@PathVariable("idAluno") Integer idAluno, @RequestBody AvaliacaoFisicaForm form){
-        return avaliacaoFisicaService.create(idAluno, form);
+    public ResponseEntity<AvaliacaoFisica> create(@PathVariable("idAluno") Integer idAluno, @RequestBody AvaliacaoFisicaForm form){
+        AvaliacaoFisica avaliacao = avaliacaoFisicaService.create(idAluno, form);
+
+        if(avaliacao == null) {
+            return new ResponseEntity<AvaliacaoFisica>((AvaliacaoFisica) null, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<AvaliacaoFisica>(avaliacao, HttpStatus.CREATED);
+        }
     }
 
     @DeleteMapping("/{idAvaliacao}")
