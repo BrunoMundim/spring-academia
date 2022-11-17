@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +27,10 @@ public class Aluno {
     private LocalDate dataNascimento;
     private String genero;
     private LocalDate dataMatricula;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tb_aluno_roles", joinColumns = @JoinColumn(name = "nome_id"))
+    @Column(name = "role_id")
+    private List<String> roles = new ArrayList<>();
 
 }

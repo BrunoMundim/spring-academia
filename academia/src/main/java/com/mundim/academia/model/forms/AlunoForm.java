@@ -1,5 +1,6 @@
 package com.mundim.academia.model.forms;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class AlunoForm {
 
     @NotNull(message = "Preencha os dados corretamente")
     @Past(message = "Data '${validatedValue}' é inválida")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     private String genero;
