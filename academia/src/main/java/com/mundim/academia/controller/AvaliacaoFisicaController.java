@@ -28,9 +28,13 @@ public class AvaliacaoFisicaController {
     }
 
     @DeleteMapping("/{idAvaliacao}")
-    public ResponseEntity delete(@PathVariable("idAvaliacao") Integer id) {
-        avaliacaoFisicaService.delete(id);
-        return new ResponseEntity("Avaliação apagada!", HttpStatus.OK);
+    public ResponseEntity<AvaliacaoFisica> delete(@PathVariable("idAvaliacao") Integer id) {
+        AvaliacaoFisica avaliacao = avaliacaoFisicaService.delete(id).orElse(null);
+
+        if(avaliacao == null){
+            return new ResponseEntity("Essa avaliacao nao existe!", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<AvaliacaoFisica>(avaliacao, HttpStatus.OK);
     }
 
 }

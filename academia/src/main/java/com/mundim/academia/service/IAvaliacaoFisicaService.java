@@ -4,6 +4,7 @@ import com.mundim.academia.model.AvaliacaoFisica;
 import com.mundim.academia.model.forms.AvaliacaoFisicaForm;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IAvaliacaoFisicaService {
 
@@ -11,6 +12,6 @@ public interface IAvaliacaoFisicaService {
 
     List<AvaliacaoFisica> getAll(Integer id);
 
-    void delete(Integer idAvaliacao);
+    Optional<AvaliacaoFisica> delete(Integer idAvaliacao);
 
 }

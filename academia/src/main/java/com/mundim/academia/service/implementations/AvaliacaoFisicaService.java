@@ -1,6 +1,5 @@
 package com.mundim.academia.service.implementations;
 
-import com.mundim.academia.controller.AvaliacaoFisicaController;
 import com.mundim.academia.model.Aluno;
 import com.mundim.academia.model.AvaliacaoFisica;
 import com.mundim.academia.model.forms.AvaliacaoFisicaForm;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AvaliacaoFisicaService implements IAvaliacaoFisicaService {
@@ -39,13 +39,17 @@ public class AvaliacaoFisicaService implements IAvaliacaoFisicaService {
     @Override
     public List<AvaliacaoFisica> getAll(Integer id) {
         Aluno aluno = alunoRepository.findById(id).get();
-
         return avaliacaoRepository.findByAluno(aluno);
     }
 
     @Override
-    public void delete(Integer idAvaliacao) {
-        AvaliacaoFisica avaliacaoFisica = avaliacaoRepository.findById(idAvaliacao).get();
-        avaliacaoRepository.delete(avaliacaoFisica);
+    public Optional<AvaliacaoFisica> delete(Integer idAvaliacao) {
+        if(avaliacaoRepository.findById(idAvaliacao).isPresent()){
+            AvaliacaoFisica avaliacaoFisica = avaliacaoRepository.findById(idAvaliacao).get();
+            avaliacaoRepository.delete(avaliacaoFisica);
+            return Optional.of(avaliacaoFisica);
+        } else {
+            return Optional.empty();
+        }
     }
 }
